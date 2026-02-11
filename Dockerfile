@@ -25,9 +25,9 @@ COPY . .
 # This prevents downloading it at runtime (faster startup)
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
-# Expose the port
-EXPOSE 8000
+# Expose the port (Render default is 10000)
+EXPOSE 10000
 
 # Run the application with uvicorn
 # Use 0.0.0.0 for external access in containers
-CMD ["uvicorn", "main.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main.main:app", "--host", "0.0.0.0", "--port", "10000"]

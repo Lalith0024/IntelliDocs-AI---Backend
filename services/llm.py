@@ -4,10 +4,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = OpenAI(
-    api_key=os.getenv("GROQ_API_KEY"),
-    base_url="https://api.groq.com/openai/v1"
-)
+def get_client():
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError("GROQ_API_KEY environment variable is not set")
+    return OpenAI(
+        api_key=api_key,
+        base_url="https://api.groq.com/openai/v1"
+    )
 
 def build_prompt(question, documents):
 
@@ -36,9 +40,9 @@ Documents:
 Answer:
 """
 
-def generate_answer(prompt):
+    client = get_client()
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model="llama3-8b-8192",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2,
         max_tokens=800
