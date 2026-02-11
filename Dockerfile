@@ -13,9 +13,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy requirements file (ensure it's in the build context)
 COPY main/requirements.txt .
 
+# Optimize for low memory environments (Render Free Tier)
+ENV OMP_NUM_THREADS=1
+ENV MKL_NUM_THREADS=1
+
 # Install Python dependencies
-# Increase timeout for heavy ML packages
+# 1. Install CPU-only PyTorch first to save massive space/memory (avoids CUDA)
+# 2. Then install the rest
 RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire backend codebase

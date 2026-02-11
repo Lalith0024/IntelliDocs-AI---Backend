@@ -14,9 +14,12 @@ DATA_DIR = os.path.join(BASE_DIR, "..", "data")
 SIMILARITY_THRESHOLD = 0.10
 
 # Initialize once at startup
-documents = load_documents(DATA_DIR)
-documents = embed_documents(documents)
+import gc
+raw_docs = load_documents(DATA_DIR)
+documents = embed_documents(raw_docs)
 retriever = Retriever(documents)
+del raw_docs  # Free up the raw list if possible (though embed_documents might modify in place or return new list)
+gc.collect()
 
 
 def calculate_confidence(score):
