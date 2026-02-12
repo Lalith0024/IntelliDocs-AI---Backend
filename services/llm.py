@@ -14,9 +14,7 @@ def get_client():
     )
 
 def build_prompt(question, documents):
-
     documents_text = ""
-
     for doc in documents:
         documents_text += f"\nSOURCE: {doc['source']}\n"
         documents_text += f"CONTENT: {doc['content']}\n"
@@ -40,6 +38,7 @@ Documents:
 Answer:
 """
 
+def generate_answer(prompt):
     client = get_client()
     response = client.chat.completions.create(
         model="llama3-8b-8192",
@@ -49,3 +48,4 @@ Answer:
     )
 
     return response.choices[0].message.content
+

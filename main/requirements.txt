@@ -1,7 +1,6 @@
 fastapi
 uvicorn
-sentence-transformers
-faiss-cpu
+fastembed
 numpy
 openai
 python-dotenv

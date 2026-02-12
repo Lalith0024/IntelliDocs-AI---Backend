@@ -38,7 +38,7 @@ class QueryRequest(BaseModel):
 def query_endpoint(request: QueryRequest):
     result = run_pipeline(request.question)
 
-    # Log the query for analytics
+    # Log the query for analytics (cap to 100 entries to save memory)
     query_log.append({
         "question": request.question,
         "success": result["success"],
@@ -47,6 +47,11 @@ def query_endpoint(request: QueryRequest):
         "retrieval_count": result["retrieval_count"],
         "valid_count": result["valid_count"],
     })
+    
+    # Prune log if it grows too large
+    if len(query_log) > 100:
+        query_log.pop(0)
+
 
     return result
 
