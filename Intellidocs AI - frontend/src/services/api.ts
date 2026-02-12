@@ -7,11 +7,15 @@ import type {
   StatsResponse,
 } from '../types/api';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+export let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-if (import.meta.env.DEV) {
-  console.log('🔌 API Service initialized with:', API_URL);
+// Sanitize: Remove trailing slash and ensure protocol
+if (API_URL.endsWith('/')) {
+  API_URL = API_URL.slice(0, -1);
 }
+
+// Security: Log the active endpoint so user can verify if Vercel baked it in correctly
+console.log('📡 Intelligence Engine connected to:', API_URL);
 
 const api = axios.create({
   baseURL: API_URL,

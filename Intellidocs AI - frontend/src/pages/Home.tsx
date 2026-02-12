@@ -4,7 +4,7 @@ import { SearchBar } from '../components/SearchBar';
 import { AnswerPanel } from '../components/AnswerPanel';
 import { SourceCard } from '../components/SourceCard';
 import { DashboardSkeleton } from '../components/LoadingSkeleton';
-import { queryService } from '../services/api';
+import { queryService, API_URL } from '../services/api';
 import type { QueryResponse } from '../types/api';
 import { Link } from 'react-router-dom';
 import { Shield, Database, Sparkles, Clock, Globe, ArrowRight, AlertTriangle, MessageCircleQuestion } from 'lucide-react';
@@ -111,17 +111,22 @@ export const Home = () => {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-6 bg-rose-50 border border-rose-200 rounded-3xl flex items-center gap-4 shadow-sm"
+          className="p-6 bg-rose-50 border border-rose-200 rounded-3xl flex flex-col gap-4 shadow-sm"
         >
-          <div className="w-10 h-10 rounded-2xl bg-rose-100 flex items-center justify-center flex-shrink-0">
-            <AlertTriangle className="w-5 h-5 text-rose-600" />
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-2xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+              <AlertTriangle className="w-5 h-5 text-rose-600" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-rose-800">Connection Failed</p>
+              <p className="text-[11px] text-rose-600/80 mt-1 leading-relaxed">
+                We couldn't reach <strong>{API_URL}</strong>.
+                Check if the link is correct and if the backend is online.
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-bold text-rose-800">Connection Failed</p>
-            <p className="text-[11px] text-rose-600/80 mt-1 leading-relaxed">
-              We couldn't reach the intelligence engine. Please check if your backend is online.
-              <span className="font-semibold px-1 italic">Note:</span> If using a free instance, the first request may take up to 50 seconds to boot the server.
-            </p>
+          <div className="p-3 bg-rose-100/50 rounded-xl border border-rose-100 text-[10px] text-rose-700 font-mono">
+            Details: {mutation.error instanceof Error ? mutation.error.message : 'Unknown network error'}
           </div>
         </motion.div>
       )}
