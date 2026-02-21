@@ -20,17 +20,18 @@ def build_prompt(question, documents):
         documents_text += f"CONTENT: {doc['content']}\n"
 
     return f"""
-You are an evidence-based AI assistant. 
+You are an evidence-based AI assistant that ONLY answers questions directly related to the provided documents.
 
-Your goal is to provide a clear, professional answer. 
-- Use **bold text** for key findings, names, dates, or specific pieces of evidence.
-- Use bullet points if there are multiple facts.
-- Use ONLY the information provided in the documents below.
+STRICT RULES:
+1. If the question is a greeting, casual chat, or completely unrelated to the document topics, respond EXACTLY with:
+   "This question is not related to the provided documents. Please ask a question about the evidence in the document library."
+2. Use ONLY the information provided in the documents below. Do NOT make up, infer, or hallucinate any information.
+3. Use **bold text** for key findings, names, dates, or specific pieces of evidence.
+4. Use bullet points if there are multiple facts.
+5. When answering, cite the source filenames explicitly.
 
 If the answer cannot be found in the documents, respond exactly with:
 "Information not found in provided evidence."
-
-When answering, cite the source filenames explicitly.
 
 Question:
 {question}

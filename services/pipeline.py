@@ -9,9 +9,10 @@ from services.llm import build_prompt, generate_answer
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "..", "data")
 
-# Low threshold for small corpus — we rely on the LLM to determine relevance
-# MiniLM-L6-v2 returns cosine sim 0.2-0.6 for related short docs
-SIMILARITY_THRESHOLD = 0.10
+# Threshold calibrated for all-MiniLM-L6-v2 cosine similarity.
+# 0.25 filters out casual/unrelated queries while still catching valid ones.
+# MiniLM-L6-v2 returns cosine sim 0.3-0.6 for genuinely related queries.
+SIMILARITY_THRESHOLD = 0.25
 
 # Initialize once at startup
 import gc
