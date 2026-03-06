@@ -1,3 +1,3 @@
-from main.main import app
+from app.main import app
 
-# Vercel looks for 'app' variable in the file
+# Vercel Serverless Entrypoint

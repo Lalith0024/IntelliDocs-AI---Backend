@@ -1,6 +1,0 @@
-fastapi
-uvicorn
-fastembed
-numpy
-openai
-python-dotenv

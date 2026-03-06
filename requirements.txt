@@ -4,3 +4,11 @@ fastembed
 numpy
 openai
 python-dotenv
+python-multipart
+sqlalchemy
+passlib[bcrypt]
+pyjwt
+chromadb
+pydantic[email]
+pydantic-settings
+groq
